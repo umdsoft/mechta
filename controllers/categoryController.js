@@ -2,11 +2,12 @@ const Category = require('../models/category');
 const Color = require('../models/color');
 
 exports.addCategory = (req,res) => {
-    if(!req.body.name){
+    if(!req.body.nameUz){
         res.json("name required");
     }
     const category = new Category({
-        name: req.body.name,
+        nameUz: req.body.nameUz,
+        nameRu: req.body.nameRu,
         cat_slug: Date.now(),
         date: Date.now()
     });
