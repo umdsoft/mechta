@@ -38,17 +38,17 @@ router.post('/register', authController.register);
 
 router.post('/login', authController.login);
 
-router.post('/color',auth, categoryController.addColor);
-router.get('/color',auth, categoryController.getColors);
-router.delete(`/color/:id`,auth, categoryController.deleteColor);
+router.post('/color', categoryController.addColor);
+router.get('/color', categoryController.getColors);
+router.delete(`/color/:id`, categoryController.deleteColor);
 
-router.post('/orders',auth,orderController.addOrder);
+router.post('/orders',orderController.addOrder);
 
-router.post('/product',auth, upload.array('images',12), productController.addProduct);
+router.post('/product', upload.array('images',12), productController.addProduct);
 
-router.post('/category',auth, categoryController.addCategory);
-router.get('/category',auth, categoryController.getCategory);
-router.delete('/category/:id',auth, categoryController.deleteCategory);
+router.post('/category', categoryController.addCategory);
+router.get('/category', categoryController.getCategory);
+router.delete('/category/:id', categoryController.deleteCategory);
 
 
 router.get('/events', (req,res) => {
