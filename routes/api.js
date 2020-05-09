@@ -45,72 +45,14 @@ router.delete(`/color/:id`, categoryController.deleteColor);
 router.post('/orders',orderController.addOrder);
 
 router.post('/product', upload.array('images',12), productController.addProduct);
+router.get('/product',productController.getProduct);
+router.get('/product/:id', productController.getById);
+router.delete('/product/:id',productController.deleteProduct);
 
+router.get('/category/:id',categoryController.getById);
 router.post('/category', categoryController.addCategory);
 router.get('/category', categoryController.getCategory);
 router.delete('/category/:id', categoryController.deleteCategory);
 
-
-router.get('/events', (req,res) => {
-    let events = [
-        {
-            "_id": "1",
-            "name": "Umidbek Jumaniyozov",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        },
-        {
-            "_id": "2",
-            "name": "Kamina",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        },
-        {
-            "_id": "3",
-            "name": "Salomat Dilshodova",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        },
-        {
-            "_id": "4",
-            "name": "Bla bla bla",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        }
-
-    ];
-    res.json(events);
-});
-
-router.get('/special',auth, (req,res) => {
-    let specialEvents = [
-        {
-            "_id": "1",
-            "name": "Umidbek Jumaniyozov",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        },
-        {
-            "_id": "2",
-            "name": "Kamina",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        },
-        {
-            "_id": "3",
-            "name": "Salomat Dilshodova",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        },
-        {
-            "_id": "4",
-            "name": "Bla bla bla",
-            "description": "lorem ispum dolor",
-            "date": "2020-04-23T18:25:43.511Z"
-        }
-
-    ];
-    res.json(specialEvents);
-});
 
 module.exports = router;

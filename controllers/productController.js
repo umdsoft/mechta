@@ -38,3 +38,22 @@ exports.addProduct = async (req,res) => {
             })
         });
 }
+
+exports.getProduct = async (req,res)=>{
+    const product = await Product.find().sort({date: -1});
+    res.send(product);
+
+}
+exports.getById = async (req,res) => {
+    const getProduct = await Product.findById({_id:req.params.id});
+    res.send(getProduct);
+}
+exports.deleteProduct = (req,res) => {
+    Product.findByIdAndDelete(req.params.id, (err, doc) => {
+        if (!err) {
+            res.json({message: "Этот был удален"});
+        } else {
+            console.log("Error" + err);
+        }
+    });
+}

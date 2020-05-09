@@ -1,5 +1,6 @@
 const Category = require('../models/category');
 const Color = require('../models/color');
+const Product = require('../models/product')
 
 exports.addCategory = (req,res) => {
     if(!req.body.nameUz){
@@ -62,4 +63,10 @@ exports.deleteColor = (req,res) => {
             console.log("Error" + err);
         }
     });
+}
+
+exports.getById = async (req,res)=>{
+
+    const getProducts = await Product.find({category: req.params.id});
+    res.send(getProducts);
 }
