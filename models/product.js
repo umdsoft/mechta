@@ -4,7 +4,7 @@ const slug = require('mongoose-slug-generator');
 const Schema = mongoose.Schema;
 mongoose.plugin(slug);
 
-const productSchema = Schema({
+const productSchema = new Schema({
     pid: {type: Number, required: true},
     nameUz: {type: String, required: true},
     nameRu: {type: String, required: true},
