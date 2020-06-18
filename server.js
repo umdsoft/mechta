@@ -4,7 +4,7 @@ const cors = require('cors');
 const pathdir = require('path').join(__dirname, '/uploads')
 const mongoose = require('mongoose');
 const config = require ('./config/server');
-const PORT = 5000;
+const PORT = 3000;
 const app = express();
 const api = require('./routes/api');
 mongoose.connect(config.mongoUri,{
