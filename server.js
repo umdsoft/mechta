@@ -4,24 +4,28 @@ const cors = require('cors');
 const pathdir = require('path').join(__dirname, '/uploads')
 const mongoose = require('mongoose');
 const config = require ('./config/server');
-const PORT = 3000;
+const PORT = 5000;
 const app = express();
-const api = require('./routes/api')
-mongoose.connect(config.mongoUri,{useNewUrlParser: true, useUnifiedTopology: true}) .then(()=>{
+const api = require('./routes/api');
+mongoose.connect(config.mongoUri,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(()=>{
     console.log('Bazaga Ulandi');
 })
-    .catch((err)=>{
-        console.log('Xatolik', err);
-    });
+.catch((err)=>{
+    console.log('Xatolik', err);
+});
 
-mongoose.set('useFindAndModify',false);
+mongoose.set('useFindAndModify', false);
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/uploads', express.static(pathdir))
+app.use('/uploads', express.static(pathdir));
 app.use('/api',api);
 
-app.get('/', function(req,res){
+app.get('/', function(req, res){
     res.send("Hello Server");
 });
 

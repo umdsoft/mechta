@@ -3,7 +3,7 @@ const config = require ('../config/server');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-exports.register = async  (req,res)=>{
+exports.register = async(req, res) => {
     let userData = req.body;
     const salt = await bcrypt.genSalt();
     const password = await bcrypt.hash(userData.password, salt);
@@ -11,7 +11,7 @@ exports.register = async  (req,res)=>{
         name: userData.name,
         email: userData.email,
         password: password,
-        isAdmin: true,
+        isAdmin: false,
         date: Date.now()
     });
 
@@ -23,7 +23,7 @@ exports.register = async  (req,res)=>{
             let token = jwt.sign(payload, config.secret);
             res.status(200).send({token});
         }
-    })
+    });
 };
 
 exports.login = async (req,res) => {

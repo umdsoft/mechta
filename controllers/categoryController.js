@@ -3,6 +3,7 @@ const Color = require('../models/color');
 const Product = require('../models/product')
 
 exports.addCategory = (req,res) => {
+    console.log(req.body.nameUz , req.body.nameRu);
     if(!req.body.nameUz){
         res.json("name required");
     }

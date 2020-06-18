@@ -1,14 +1,12 @@
 const Product = require('../models/product');
 
 exports.addProduct = async (req,res) => {
-
     const urls = []
     const files = req.files;
     for (const file of files) {
         const { path } = file;
         urls.push(path) ;
     }
-
     const product = new Product({
         nameUz: req.body.nameUz,
         nameRu: req.body.nameRu,
@@ -39,14 +37,17 @@ exports.addProduct = async (req,res) => {
         });
 }
 
-exports.getProduct = async (req,res)=>{
+exports.getProduct = async (req,res)=> {
     const product = await Product.find().sort({date: -1});
-    res.send(product);
+    res.status(200).json(product);
 
 }
 exports.getById = async (req,res) => {
     const getProduct = await Product.findById({_id:req.params.id});
-    res.send(getProduct);
+    const categoryId = getProduct.category;
+    const similarProducts = await Product
+        .find({category  : categoryId});
+    res.send({getProduct :getProduct  , similarProducts : similarProducts});
 }
 exports.deleteProduct = (req,res) => {
     Product.findByIdAndDelete(req.params.id, (err, doc) => {
