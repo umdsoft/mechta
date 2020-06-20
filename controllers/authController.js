@@ -47,31 +47,29 @@ exports.register = async(req, res) => {
         next(error);
     }
 };
-
 exports.login = async (req,res) => {
-    //foydalanuvchini tekshirish
-    const candidate = await User.findOne({email: req.body.email})
+    let userData = req.body;
 
-    if(candidate){
-        //parolni tekshirish
-        const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
-        if(passwordResult){
-            //token generatsiya qilish
-            const token = jwt.sign({
-                email: candidate.email,
-                userId: candidate._id
-            }, config.secret, {expiresIn: 60 * 60 * 12 })
-            res.status(200).json({
-                token: `token`
-            })
-        } else {
-            //parol xato bo`lsa
-            res.status(401).json({
-                message: "Parol xato"
-            })
+    User.findOne({email: userData.email}, (error, user)=>{
+        if(error){
+            console.log(error);
+        }else{
+            if(!user){
+                res.status(401).send("Invalid email");
+            } else
+            if(!bcrypt.compare(userData.password, user.password)){
+                res.status(401).send("Invalid Password");
+            } else {
+                let payload = {subject: user._id, isAdmin: this.isAdmin};
+                let token = jwt.sign(payload, config.secret);
+                res.status(200).send({token});
+            }
         }
-    } else {
-        //foydalanuvchi topilmasa
-        res.status(404).json({message: "Foydalanuvchi topilmadi"})
-    }
+    })
 };
+
+exports.getAllUser = async (req,res)=>{
+    const users = await User.find()
+
+    res.send(users);
+}
