@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Category = require('./category');
+const Colors = require('./color');
 const slug = require('mongoose-slug-generator');
 const Schema = mongoose.Schema;
 mongoose.plugin(slug);
@@ -11,7 +12,7 @@ const productSchema = new Schema({
     slug: {type: String, slug: "pid"},
     category: {
         type: Schema.Types.ObjectID,
-        ref: Category,
+        ref: 'categories',
         required: true
     },
     size: {type: String, required: true},
@@ -28,8 +29,14 @@ const productSchema = new Schema({
     instruksiyaRu: {type: String, required: true},
     images: [
         {
-            type: String,
-            required: true
+            url : {
+                type: String,
+                required: true
+            },
+            colorId : {
+                type : Schema.Types.ObjectID,
+                ref : 'colors'
+            }
         }
         ],
     price: {type: Number, required: true},

@@ -3,10 +3,13 @@ const Product = require('../models/product');
 exports.addProduct = async (req, res) => {
     const urls = []
     const files = req.files;
-    for (const file of files) {
+    for (const [idx,file] of files.entries()) {
         const { path } = file;
-        urls.push(path) ;
-    }
+        urls.push({
+            url : path.replace(/\\/g, '/'),
+            colorId : req.body.colors[idx]
+        });
+    };
     const product = new Product({
         nameUz: req.body.nameUz,
         nameRu: req.body.nameRu,

@@ -3,7 +3,6 @@ const Color = require('../models/color');
 const Product = require('../models/product')
 
 exports.addCategory = (req,res) => {
-    console.log(req.body.nameUz , req.body.nameRu);
     if(!req.body.nameUz){
         res.json("name required");
     }
@@ -28,22 +27,30 @@ exports.getCategory = async (req,res)=>{
 }
 
 exports.deleteCategory = (req,res) => {
-  Category.findByIdAndDelete(req.params.id , (err,doc)=>{
-      if(!err){
-          res.json({message: "Этот категория был удален"});
-      } else {
-          console.log("Error" + err);
-      }
-  });
+    Category.findByIdAndDelete(req.params.id , (err,doc)=>{
+        if(!err){
+            res.json({message: "Этот категория был удален"});
+        } else {
+            console.log("Error" + err);
+        }
+    });
 
 
 }
+
 exports.addColor = (req,res) => {
-    if(!req.body.name){
-        res.json("name required");
+    console.log('REQ FILE',req.file);
+    // console.log("REQ: \n" , req)
+    const colorUrl = req.file.path.replace(/\\/g, '/');
+    const form = JSON.parse(JSON.stringify(req.body));
+    console.log(form);
+    if(!form.name){
+
+        return res.json("name required");
     }
     const color = new Color({
-        name: req.body.name,
+        name: form.name,
+        url : colorUrl,
         date: Date.now()
     });
     color.save().then(result => {
@@ -67,7 +74,6 @@ exports.deleteColor = (req,res) => {
 }
 
 exports.getById = async (req,res)=>{
-
     const getProducts = await Product.find({category: req.params.id});
     res.send(getProducts);
 }

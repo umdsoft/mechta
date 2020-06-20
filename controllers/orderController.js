@@ -71,8 +71,7 @@ exports.addOrder =  async (req, res) => {
         console.log("USER" , user);
         await user.save();
         return res.status(200).json({
-            user : user,
-            order : order,
+            orderId : --user.nextOrderId,
             message: {
                 uz : "Buyurtma qabul qilindi",
                 ru : "Заказ принят"
