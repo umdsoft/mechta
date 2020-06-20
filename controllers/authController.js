@@ -49,31 +49,29 @@ exports.register = async(req, res) => {
 };
 
 exports.login = async (req,res) => {
-    let {email,password} = req.body;
-    try {
-        const user = await  User.findOne({email : email });
-        if(!user){
-            return res.status(401).send({
-                success : false,
-                message : {
-                    uz : "Bunday telefon raqamli foydalanuvchi mavjud emas",
-                    ru : 'Пользователть с таким телефонным номером не сушествует'
-                }
+    //foydalanuvchini tekshirish
+    const candidate = await User.findOne({email: req.body.email})
+
+    if(candidate){
+        //parolni tekshirish
+        const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
+        if(passwordResult){
+            //token generatsiya qilish
+            const token = jwt.sign({
+                email: candidate.email,
+                userId: candidate._id
+            }, config.secret, {expiresIn: 60 * 60 * 12 })
+            res.status(200).json({
+                token: `token`
+            })
+        } else {
+            //parol xato bo`lsa
+            res.status(401).json({
+                message: "Parol xato"
             })
         }
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid) {
-            return res.status(401).send({
-                success : false,
-                message : {
-                    uz : "Parol hato",
-                    ru : 'Неправильный пароль'
-                }})
-        }
-        let payload = {subject: user._id, isAdmin: this.isAdmin};
-        let token = jwt.sign(payload, config.secret);
-        res.status(200).send({token, success : true});
-    } catch (error) {
-        console.log(error);
+    } else {
+        //foydalanuvchi topilmasa
+        res.status(404).json({message: "Foydalanuvchi topilmadi"})
     }
 };
