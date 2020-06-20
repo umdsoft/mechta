@@ -49,9 +49,9 @@ exports.register = async(req, res) => {
 };
 
 exports.login = async (req,res) => {
-    let {phone,password} = req.body;
+    let {email,password} = req.body;
     try {
-        const user = await  User.findOne({phone : phone });
+        const user = await  User.findOne({email : email });
         if(!user){
             return res.status(401).send({
                 success : false,
