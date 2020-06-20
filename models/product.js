@@ -12,7 +12,7 @@ const productSchema = new Schema({
     slug: {type: String, slug: "pid"},
     category: {
         type: Schema.Types.ObjectID,
-        ref: 'categories',
+        ref: 'category',
         required: true
     },
     size: {type: String, required: true},
@@ -35,7 +35,7 @@ const productSchema = new Schema({
             },
             colorId : {
                 type : Schema.Types.ObjectID,
-                ref : 'colors'
+                ref : 'color'
             }
         }
         ],

@@ -11,5 +11,5 @@ const categorySchema = Schema({
     date: {type:Date, required: true}
 });
 
-module.exports = mongoose.model('category', categorySchema, 'categories');
+module.exports = mongoose.model('category', categorySchema);
 

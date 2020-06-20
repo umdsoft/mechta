@@ -12,7 +12,7 @@ const orderSchema = Schema({
     address: {type: String, required: true},
     totalPrice: {type: Number , required: true},
     totalNum: {type: Number, required: true},
-    creatorId : {type : Schema.Types.ObjectId, ref : 'users', required : true},
+    creatorId : {type : Schema.Types.ObjectId, ref : 'user', required : true},
     products: [
         {
             productId: {
@@ -45,7 +45,7 @@ const orderSchema = Schema({
     date: Date
 });
 
-module.exports = mongoose.model('order', orderSchema, 'orders');
+module.exports = mongoose.model('order', orderSchema);
 
 // orderId: {
     //     type: Number,

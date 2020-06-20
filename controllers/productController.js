@@ -41,7 +41,7 @@ exports.addProduct = async (req, res) => {
 }
 
 exports.getProduct = async (req, res)=> {
-    const product = await Product.find().sort({date: -1});
+    const product = await Product.find().populate('images.colorId').sort({date: -1});
     res.status(200).json(product);
 }
 exports.getById = async (req, res) => {

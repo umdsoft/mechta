@@ -8,5 +8,5 @@ const colorSchema = Schema({
     date: {type: Date, required: true}
 });
 
-module.exports = mongoose.model('color', colorSchema, 'colors');
+module.exports = mongoose.model('color', colorSchema);
 
