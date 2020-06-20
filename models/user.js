@@ -3,9 +3,10 @@ const Order = require('./order');
 const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-   phone: {
+   email: {
       type :String,
-      required : true
+      required : true,
+      unique: true
    },
    region: Number,
    name: String,
