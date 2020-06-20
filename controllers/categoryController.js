@@ -23,8 +23,8 @@ exports.addCategory = (req,res) => {
 }
 
 exports.getCategory = async (req,res)=>{
-   let category =await Category.find().sort({date: -1});
-   res.send(category);
+    let category =await Category.find().sort({date: -1});
+    res.send(category);
 }
 
 exports.deleteCategory = (req,res) => {

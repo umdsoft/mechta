@@ -1,6 +1,6 @@
 const Product = require('../models/product');
 
-exports.addProduct = async (req,res) => {
+exports.addProduct = async (req, res) => {
     const urls = []
     const files = req.files;
     for (const file of files) {
@@ -37,12 +37,11 @@ exports.addProduct = async (req,res) => {
         });
 }
 
-exports.getProduct = async (req,res)=> {
+exports.getProduct = async (req, res)=> {
     const product = await Product.find().sort({date: -1});
     res.status(200).json(product);
-
 }
-exports.getById = async (req,res) => {
+exports.getById = async (req, res) => {
     const getProduct = await Product.findById({_id:req.params.id});
     const categoryId = getProduct.category;
     const similarProducts = await Product

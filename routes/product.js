@@ -18,4 +18,4 @@ router.get('/product',productController.getProduct);
 router.get('/product/:id', productController.getById);
 router.delete('/product/:id',productController.deleteProduct);
 
-module.exports = router
+module.exports = router;

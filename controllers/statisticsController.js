@@ -1,6 +1,6 @@
 const Order = require('../models/order');
 const Category = require('../models/category');
-const interval = 1000 * 60 * 60 * 24;
+const interval = 1000 * 60 * 60 * 24; // milliseconds in one day
 
 exports.getStatistics = async (req, res) => {
     const orderByRegion = await Order
