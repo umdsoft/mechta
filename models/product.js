@@ -19,7 +19,7 @@ const productSchema = new Schema({
     netto: {type: String, required: true},
     diametr: {type: String, required: true},
     diz: {type: String, required: true},
-    pok: {type: String, required: true},
+    pok: String,
     descriptionUz: {type: String,required: true},
     descriptionRu: {type: String,required: true},
     xarakterUz: {type: String, required: true},

@@ -19,7 +19,6 @@ exports.addProduct = async (req, res) => {
         netto: req.body.netto,
         diametr: req.body.diametr,
         diz: req.body.diz,
-        pok: req.body.pok,
         descriptionUz: req.body.descriptionUz,
         descriptionRu: req.body.descriptionRu,
         xarakterUz: req.body.xarakterUz,
