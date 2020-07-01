@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const pathdir = require('path').join(__dirname, '/uploads')
 const mongoose = require('mongoose');
 const config = require ('./config/server');
 const PORT = 3000;
@@ -22,7 +23,7 @@ mongoose.set('useFindAndModify', false);
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/api',api);
-app.use(express.static('uploads'));
+app.use('/uploads', express.static(pathdir));
 
 app.get('/', function(req, res){
     res.send("Hello Server");
