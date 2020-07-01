@@ -20,10 +20,10 @@ mongoose.connect(config.mongoUri,{
 
 mongoose.set('useFindAndModify', false);
 
-// app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/api',api);
+app.use(express.static('uploads'));
 
 app.get('/', function(req, res){
     res.send("Hello Server");
