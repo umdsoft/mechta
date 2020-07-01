@@ -1,8 +1,9 @@
 const Product = require('../models/product');
 
 exports.addProduct = async (req, res) => {
-    const urls = []
+    const urls = [];
     const files = req.files;
+
     for (const [idx,file] of files.entries()) {
         const { path } = file;
         urls.push({
@@ -19,6 +20,7 @@ exports.addProduct = async (req, res) => {
         netto: req.body.netto,
         diametr: req.body.diametr,
         diz: req.body.diz,
+        pok: req.body.pok,
         descriptionUz: req.body.descriptionUz,
         descriptionRu: req.body.descriptionRu,
         xarakterUz: req.body.xarakterUz,
@@ -59,3 +61,59 @@ exports.deleteProduct = (req,res) => {
         }
     });
 }
+
+exports.updateProduct = async(req, res) => {
+    const { files } = req;
+    const { productId } = req.params;
+    const images = req.body.images || [];
+
+    try {
+        const product = await Product.findById(productId);
+        const imgs = product.images;
+        if(files && images.length < 1){
+            for (const [idx,file] of files.entries()) {
+                const { path } = file;
+                images.push({
+                    url : path.replace(/\\/g, '/'),
+                    colorId : req.body.colors[idx]
+                });
+            };
+            for(const img of imgs){
+                clearImage(img.path);
+            }
+        }
+        product.nameUz = req.body.nameUz;
+        product.nameRu = req.body.nameRu;
+        product.pid = req.body.pid;
+        product.category = req.body.category;
+        product.size = req.body.size;
+        product.netto = req.body.netto;
+        product.diametr = req.body.diametr;
+        product.diz = req.body.diz;
+        product.pok = req.body.pok;
+        product.descriptionUz = req.body.descriptionUz;
+        product.descriptionRu = req.body.descriptionRu;
+        product.xarakterUz = req.body.xarakterUz;
+        product.xarakterRu = req.body.xarakterRu;
+        product.video = req.body.video;
+        product.instruksiyaUz = req.body.instruksiyaUz;
+        product.price = req.body.price;
+
+        const updatedProduct = await product.save();
+        return res.status(200).json({
+            success : true,
+            product : updatedProduct
+        })
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+
+}
+
+const clearImage = (filePath) => {
+    filePath = path.join(__dirname, "..", filePath);
+    fs.unlink(filePath, (err) => {
+        console.log(err);
+    });
+};

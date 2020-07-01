@@ -3,50 +3,29 @@ const config = require ('../config/server');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-exports.register = async(req, res) => {
+exports.register = async  ( req, res )=>{
     let userData = req.body;
     const salt = await bcrypt.genSalt();
     const password = await bcrypt.hash(userData.password, salt);
-    try {
-        const isExistingUser = await User.findOne({phone : {
-            countryCode : userData.phone.countryCode,
-            companyCode : userData.phone.companyCode,
-            phoneNumber : userData.phone.phoneNumber
-        }});
-        if(isExistingUser) {
-            return res.status(409).json({
-                success : false,
-                message : {
-                    ru : "Пользаватель с таким телефоном уже имеется",
-                    uz : "Bunday telefon raqamli foydalanuvchi mavjud"
-                }
-            });
+    let user = new User({
+        name: userData.name,
+        email: userData.email,
+        password: password,
+        isAdmin: false,
+        date: Date.now()
+    });
+
+    user.save((error, registedUser)=>{
+        if(error){
+            console.log(error);
+        }else{
+            let payload = {subject: registedUser._id};
+            let token = jwt.sign(payload, config.secret);
+            res.status(200).send({token});
         }
-        const user = new User({
-            phone: {
-                countryCode : userData.phone.countryCode,
-                companyCode : userData.phone.companyCode,
-                phoneNumber : userData.phone.phoneNumber
-            },
-            name : userData.name,
-            password: password,
-            isAdmin: false,
-            date: Date.now()
-        });
-        user.save((error, registedUser)=>{
-            if(error){
-                console.log(error);
-            }else{
-                let payload = {subject: registedUser._id};
-                let token = jwt.sign(payload, config.secret);
-                res.status(200).send({success : true , token});
-            }
-        });
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
+    })
 };
+
 exports.login = async (req,res) => {
     let userData = req.body;
 
@@ -57,19 +36,13 @@ exports.login = async (req,res) => {
             if(!user){
                 res.status(401).send("Invalid email");
             } else
-            if(!bcrypt.compare(userData.password, user.password)){
+            if(user.password !== bcrypt.compare(userData.password, user.password)){
                 res.status(401).send("Invalid Password");
             } else {
-                let payload = {subject: user._id, isAdmin: this.isAdmin};
+                let payload = {subject: user._id};
                 let token = jwt.sign(payload, config.secret);
                 res.status(200).send({token});
             }
         }
     })
 };
-
-exports.getAllUser = async (req,res)=>{
-    const users = await User.find()
-
-    res.send(users);
-}

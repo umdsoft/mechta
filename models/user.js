@@ -10,4 +10,4 @@ const userSchema = Schema({
    date: {type: Date, required: true}
 });
 
-module.exports = mongoose.model('user', userSchema, 'users');
+module.exports = mongoose.model('admin', userSchema);

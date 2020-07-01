@@ -1,12 +1,12 @@
 const Order = require('../models/order');
-const User = require('../models/user');
+const Consumer = require('../models/consumer');
 // 5eeb48ceb35ebc296866f681
 exports.checkUser = async (req, res) => {
-    const {phone} = req.body;
-    const existingUser = await User.findOne({ phone : phone });
+    const { phone } = req.body;
+    const existingUser = await Consumer.findOne({ phone : phone });
     let user;
-    if(!existingUser) {
-        const user = new User({
+    if(!existingUser){
+        const user = new Consumer({
             phone : phone,
             nextOrderId : 1,
             orders : [],
@@ -36,8 +36,12 @@ exports.addOrder =  async (req, res) => {
     //         message: "id found"
     //     })
     // }
-    const user = await User.findOne({phone: data.phone});
-
+    const user = await Consumer.findOne({phone: data.phone});
+    if(!user) {
+        res.status(401).json({
+            message : "user not found"
+        })
+    }
     if(data.address !== user.address) {
         user.address = data.address;
     }
@@ -57,7 +61,7 @@ exports.addOrder =  async (req, res) => {
             totalPrice: data.totalPrice,
             totalNum: data.num,
             products: data.products,
-            creatorId : data.userId,
+            creatorId : user._id,
             status : data.status,
             region : data.region,
             date: Date.now()
@@ -68,7 +72,6 @@ exports.addOrder =  async (req, res) => {
             lastOrderId : user.nextOrderId
         });
         user.nextOrderId = ++user.nextOrderId;
-        console.log("USER" , user);
         await user.save();
         return res.status(200).json({
             orderId : --user.nextOrderId,
@@ -91,13 +94,27 @@ exports.getAllOrders = async (req,res) => {
     res.send(orders);
 };
 
-exports.getOrderStatus = async(req, res) => {
-    console.log("GET ORDER STATUS");
-    const { orderId } = req.params;
-    console.log(orderId);
+exports.postOrderStatus = async(req, res) => {
+    // const { orderId } = req.params;
+    const { phone, orderId } = req.body;
+    const user = await Consumer.findOne({ phone : phone });
+    if(!user){
+        res.status(401).json({
+            message : "user not found"
+        })
+    }
+    const ord = user.orders.map(order => {
+        if(order.lastOrderId === Number(orderId)){
+            return order;
+        }else{
+            return res.status(404).json({
+                message : "order with this id does not exists"
+            })
+        }
+    });
+    // console.log('Ord' , ord[0]._id)
     try {
-        const order = await Order.findOne({orderId:orderId});
-        console.log(order);
+        const order = await Order.findOne({ _id : ord[0].orderId });
         res.status(200).json({status: order.status});
     } catch (error) {
         console.log(error);

@@ -23,7 +23,6 @@ mongoose.set('useFindAndModify', false);
 // app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/uploads', express.static(pathdir));
 app.use('/api',api);
 
 app.get('/', function(req, res){

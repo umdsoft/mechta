@@ -6,6 +6,6 @@ router.post('/check-user', orderController.checkUser);
 router.post('/orders',orderController.addOrder);
 router.get('/orders', orderController.getAllOrders);
 
-router.get('/order/:orderId',orderController.getOrderStatus);
+router.post('/order',orderController.postOrderStatus);
 
 module.exports = router;

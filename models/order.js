@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Color = require('./color');
 const Porduct = require('./product');
 const category = require('./category');
-const User = require('./user');
+const Consumer = require('./consumer');
 const Schema = mongoose.Schema;
 
 const orderSchema = Schema({
@@ -12,7 +12,7 @@ const orderSchema = Schema({
     address: {type: String, required: true},
     totalPrice: {type: Number , required: true},
     totalNum: {type: Number, required: true},
-    creatorId : {type : Schema.Types.ObjectId, ref : 'user', required : true},
+    creatorId : {type : Schema.Types.ObjectId, ref : 'consumer', required : true},
     products: [
         {
             productId: {
@@ -22,11 +22,12 @@ const orderSchema = Schema({
             },
             categoryId: {
                 type : Schema.Types.ObjectId,
-                ref : 'categories',
+                ref : 'category',
                 required : true
             },
             color: {
-                type: String,
+                type: Schema.Types.ObjectId,
+                ref : "color",
                 required: true
             },
             productNum: {
