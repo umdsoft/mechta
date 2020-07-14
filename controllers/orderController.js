@@ -83,7 +83,7 @@ exports.addOrder =  async (req, res) => {
 
 exports.getAllOrders = async (req,res) => {
     const orders = await Order.find()
-        .populate('producs.productId')
+        .populate('products.productId')
         .sort({date: -1})
     res.send(orders);
 };
