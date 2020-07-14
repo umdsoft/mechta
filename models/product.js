@@ -34,7 +34,7 @@ const productSchema = new Schema({
                 required: true
             },
             colorId : {
-                type : Schema.Types.ObjectId,
+                type : Schema.Types.ObjectID,
                 ref : 'color'
             }
         }
