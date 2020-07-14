@@ -27,22 +27,28 @@ exports.register = async  ( req, res )=>{
 };
 
 exports.login = async (req,res) => {
-    let userData = req.body;
-
-    User.findOne({email: userData.email}, (error, user)=>{
-        if(error){
-            console.log(error);
-        }else{
-            if(!user){
-                res.status(401).send("Invalid email");
-            } else
-            if(user.password !== bcrypt.compare(userData.password, user.password)){
-                res.status(401).send("Invalid Password");
-            } else {
-                let payload = {subject: user._id};
-                let token = jwt.sign(payload, config.secret);
-                res.status(200).send({token});
-            }
+    const candidate = await User.findOne({email: req.body.email})
+    //agar foydalauvchi bazada mavjud bo`lsa
+    if(candidate){
+        //parolni heshdan tekshirish
+        const passwordResult = bcrypt.compareSync(req.body.password , candidate.password)
+        //agar parol to`g`ri kelsa
+        if(passwordResult){
+            //token generatsiya qilish
+            const token = jwt.sign({
+                email: candidate.email
+            },config.secret, {expiresIn: 60 * 60 * 24 })
+            res.status(200).json({
+                token: token
+            })
+        } else {
+            //parol xato bo`lsa
+            res.status(401).json({
+                message: "invalid password"
+            })
         }
-    })
+    } else {
+        //agar admin topilmasa
+        res.status(404).json({message: "public not found"})
+    }
 };
