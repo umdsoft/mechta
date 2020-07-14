@@ -12,8 +12,8 @@ const consumerSchema = Schema({
    nextOrderId : Number,
    isAdmin: {type: Boolean, default: false},
    date: {type: Date, required: true},
-   orders : [{orderId : {type : Schema.Types.ObjectID, ref: "order"} , lastOrderId : Number}]
+   orders : [{orderId : {type : Schema.Types.ObjectId, ref: "order"} , lastOrderId : Number}]
 });
 
-module.exports = mongoose.model('consumer', consumerSchema);
+module.exports = mongoose.model('consumer', consumerSchema,'consumer');
 //password: {type:String, required: true},

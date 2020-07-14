@@ -46,7 +46,7 @@ const orderSchema = Schema({
     date: Date
 });
 
-module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model('order', orderSchema,'order');
 
 // orderId: {
     //     type: Number,
