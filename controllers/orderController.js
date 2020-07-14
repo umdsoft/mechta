@@ -89,7 +89,7 @@ exports.addOrder =  async (req, res) => {
 // orderId: data.orderId,
 
 exports.getAllOrders = async (req,res) => {
-    const orders = await Order.find()
+    const orders = await Consumer.find()
         .sort({date: -1})
     res.send(orders);
 };
