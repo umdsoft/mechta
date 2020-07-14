@@ -26,3 +26,12 @@ exports.getCommentByProduct = async (req,res) => {
 
     res.send(comments)
 }
+exports.updateCommentById = async (req,res) => {
+    const comment = await Comment.findById({_id: req.body.id})
+    comment.status = true
+    const updatedProduct = await comment.save();
+    return res.status(200).json({
+        success : true,
+        product : updatedProduct
+    })
+}
