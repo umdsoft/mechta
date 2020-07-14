@@ -1,5 +1,7 @@
 const Order = require('../models/order');
 const Category = require('../models/category');
+const Product = require('../models/product')
+const Comment = require('../models/comment')
 const interval = 1000 * 60 * 60 * 24; // milliseconds in one day
 
 exports.getStatistics = async (req, res) => {
@@ -57,8 +59,15 @@ exports.getStatistics = async (req, res) => {
     const orderMonth = await Order.find({date : {"$gte" : startOfMonth}}).countDocuments();
     const ordersLast30Days = await Order.find({date : {"$gte" : last30Days}}).countDocuments();
     // console.log(ordersToday);
-
+    const allProduct = await Product.find().countDocuments()
+    const allOrders = await Order.find().countDocuments()
+    const sellOrders = await Order.find({status: "active"}).countDocuments()
+    const allComments = await Comment.find({status: true}).countDocuments()
     res.status(200).json({
+        allComments,
+        allOrders,
+        sellOrders,
+        allProduct,
         orderByRegion,
         ordersToday ,
         ordersWeek,
