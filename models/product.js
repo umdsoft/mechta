@@ -11,7 +11,7 @@ const productSchema = new Schema({
     nameRu: {type: String, required: true},
     slug: {type: String, slug: "pid"},
     category: {
-        type: Schema.Types.ObjectID,
+        type: Schema.Types.ObjectId,
         ref: 'category',
         required: true
     },
