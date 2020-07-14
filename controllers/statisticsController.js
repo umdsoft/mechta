@@ -62,7 +62,7 @@ exports.getStatistics = async (req, res) => {
     const allProduct = await Product.find().countDocuments()
     const allOrders = await Order.find().countDocuments()
     const sellOrders = await Order.find({status: "active"}).countDocuments()
-    const allComments = await Comment.find({status: true}).countDocuments()
+    const allComments = await Comment.find().countDocuments()
     res.status(200).json({
         allComments,
         allOrders,
