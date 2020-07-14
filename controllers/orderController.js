@@ -1,6 +1,5 @@
 const Order = require('../models/order');
 const Consumer = require('../models/consumer');
-// 5eeb48ceb35ebc296866f681
 exports.checkUser = async (req, res) => {
     const { phone } = req.body;
     const existingUser = await Consumer.findOne({ phone : phone });
@@ -30,12 +29,7 @@ exports.checkUser = async (req, res) => {
 }
 exports.addOrder =  async (req, res) => {
     const data = req.body;
-    // const orderIdCandidate = await Order.find().select({orderId: 1, _id: 0});
-    // if(data.orderId === orderIdCandidate) {
-    //     res.json({
-    //         message: "id found"
-    //     })
-    // }
+
     const user = await Consumer.findOne({phone: data.phone});
     if(!user) {
         res.status(401).json({
@@ -85,8 +79,7 @@ exports.addOrder =  async (req, res) => {
         console.log(error);
     }
 };
-// colorId: data.colorId,
-// orderId: data.orderId,
+
 
 exports.getAllOrders = async (req,res) => {
     const orders = await Consumer.find()
@@ -95,7 +88,6 @@ exports.getAllOrders = async (req,res) => {
 };
 
 exports.postOrderStatus = async(req, res) => {
-    // const { orderId } = req.params;
     const { phone, orderId } = req.body;
     const user = await Consumer.findOne({ phone : phone });
     if(!user){
@@ -121,4 +113,3 @@ exports.postOrderStatus = async(req, res) => {
     }
 
 };
-
