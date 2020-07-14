@@ -20,7 +20,7 @@ exports.getAllComments = async (req,res) => {
 }
 exports.getCommentByProduct = async (req,res) => {
     const comments = await Comment
-        .find({status: true, _id: req.body.id})
+        .find({product: req.body. id,status: true})
         .populate('product')
         .sort({date: -1})
     res.send(comments)
