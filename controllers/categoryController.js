@@ -76,6 +76,6 @@ exports.deleteColor = (req,res) => {
 exports.getById = async (req,res)=>{
     const getProducts = await Product
         .find({category: req.params.id})
-        .sort({date: -1});
+        .sort({date: 1});
     res.send(getProducts);
 }
