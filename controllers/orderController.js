@@ -111,7 +111,9 @@ exports.postOrderStatus = async(req, res) => {
     });
     // console.log('Ord' , ord[0]._id)
     try {
-        const order = await Order.findOne({ _id : ord[0].orderId });
+        const order = await Order
+            .findOne({ _id : ord[0].orderId })
+            .populate('products.productId');
         res.status(200).json({order: order});
     } catch (error) {
         console.log(error);
