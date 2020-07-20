@@ -19,12 +19,14 @@ exports.checkUser = async (req, res) => {
         return res.status(200).json({
             success  : true,
             user : user,
-            message : "new User created"
+            message : "new User created",
+            status : false
         })
     }
     return res.status(200).json({
         user: existingUser,
-        success : true
+        success : true,
+        status : true
     });
 }
 exports.addOrder =  async (req, res) => {
@@ -82,8 +84,10 @@ exports.addOrder =  async (req, res) => {
 
 
 exports.getAllOrders = async (req,res) => {
-    const orders = await Order.find()
-        .populate('creatorId')
+    const orders = await Order
+        .find()
+        .populate('products.productId')
+        .populate('products.categoryId')
         .sort({date: -1})
     res.send(orders);
 };
@@ -108,9 +112,10 @@ exports.postOrderStatus = async(req, res) => {
     // console.log('Ord' , ord[0]._id)
     try {
         const order = await Order.findOne({ _id : ord[0].orderId });
-        res.status(200).json({status: order.status});
+        res.status(200).json({order: order});
     } catch (error) {
         console.log(error);
     }
 
 };
+
