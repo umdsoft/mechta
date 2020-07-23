@@ -37,7 +37,7 @@ exports.login = async (req,res) => {
             //token generatsiya qilish
             const token = jwt.sign({
                 email: candidate.email
-            },config.secret, {expiresIn: 60 * 60 * 24 })
+            },config.secret)
             res.status(200).json({
                 token: token
             })
