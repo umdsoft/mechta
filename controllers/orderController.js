@@ -89,7 +89,7 @@ exports.getAllOrders = async (req,res) => {
         .find()
         .populate(['products.productId','products.categoryId'])
         .sort({date: -1})
-    res.status(200).json({success: false, data: orders})
+    res.status(200).json({success: true, data: orders})
    } catch (e) {
        res.status(500).json(e)
    }
