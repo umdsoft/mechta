@@ -84,11 +84,15 @@ exports.addOrder =  async (req, res) => {
 
 
 exports.getAllOrders = async (req,res) => {
+   try{
     const orders = await Order
         .find()
         .populate(['products.productId','products.categoryId'])
         .sort({date: -1})
     res.status(200).json({success: false, data: orders})
+   } catch (e) {
+       res.status(500).json(e)
+   }
 };
 
 exports.postOrderStatus = async(req, res) => {
