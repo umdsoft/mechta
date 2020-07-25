@@ -68,6 +68,7 @@ exports.deleteColor = (req,res) => {
         if (!err) {
             res.json({message: "Этот цвет был удален"});
         } else {
+	    res.json({error : err});
             console.log("Error" + err);
         }
     });
