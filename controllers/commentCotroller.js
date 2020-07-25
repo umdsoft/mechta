@@ -19,12 +19,16 @@ exports.getAllComments = async (req,res) => {
     res.send(comments)
 }
 exports.getCommentByProduct = async (req,res) => {
+    try{
     const comments = await Comment
-        .find({product: req.headers.id, status: false})
+        .find({product: req.headers.id, status: true})
         .populate('product')
         .sort({date: -1})
 
-    res.send(comments)
+    res.status(200).json(comments)
+    } catch (e) {
+        res.send(e)
+    }
 }
 exports.updateCommentById = async (req,res) => {
     const comment = await Comment.findById({_id: req.body.id})
@@ -34,4 +38,7 @@ exports.updateCommentById = async (req,res) => {
         success : true,
         product : updatedProduct
     })
+}
+exports.deleteCommentById = async (req,res) => {
+
 }

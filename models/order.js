@@ -22,7 +22,7 @@ const orderSchema = Schema({
             },
             categoryId: {
                 type : Schema.Types.ObjectId,
-                ref : 'category',
+                ref : 'categories',
                 required : true
             },
             color: {
@@ -46,10 +46,4 @@ const orderSchema = Schema({
     date: Date
 });
 
-module.exports = mongoose.model('order', orderSchema,'order');
-
-// orderId: {
-    //     type: Number,
-    //     required: true,
-    //     unique: true
-    // },
+module.exports = mongoose.model('order', orderSchema,'orders');
