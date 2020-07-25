@@ -24,7 +24,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/api',api);
 app.use('/uploads', express.static(pathdir));``
-
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
 app.get('/', function(req, res){
     res.send("Hello Server");
 });
