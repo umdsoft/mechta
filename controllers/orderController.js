@@ -87,7 +87,7 @@ exports.getAllOrders = async (req,res) => {
    try{
     const orders = await Order
         .find()
-        .populate(['products.productId','products.categoryId'])
+        // .populate(['products.productId','products.categoryId'])
         .sort({date: -1})
     res.status(200).json({success: true, data: orders})
    } catch (e) {
