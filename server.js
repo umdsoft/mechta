@@ -41,7 +41,7 @@ app.get('/', function(req, res){
     res.send("Hello Server");
 });
 
-app.listen(PORT, function () {
+app.listen(PORT,()=> {
     console.log('Server running ' + PORT);
 })
 
