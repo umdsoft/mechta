@@ -39,17 +39,8 @@ exports.deleteCategory = (req,res) => {
 }
 
 exports.addColor = (req,res) => {
-    console.log('REQ FILE',req.file);
-    // console.log("REQ: \n" , req)
-    const colorUrl = req.file.path.replace(/\\/g, '/');
-    const form = JSON.parse(JSON.stringify(req.body));
-    console.log(form);
-    if(!form.name){
-
-        return res.json("name required");
-    }
     const color = new Color({
-        name: form.name,
+        name: req.body.name,
         url : req.body.url,
         date: Date.now()
     });
