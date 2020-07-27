@@ -1,7 +1,5 @@
 const Product = require('../models/product');
 
-const Product = require('../models/product');
-
 exports.addProduct = async (req, res) => {
     const urls = [];
     const files = req.files;
