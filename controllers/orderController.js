@@ -97,5 +97,24 @@ exports.postOrderStatus = async(req, res) => {
         console.log(error);
     }
 
+exports.updateOrder = async(req, res) => {
+    const { orderId } = req.params;
+
+    try {
+        const order = await Order.findById(orderId);
+        
+        order.status = 'active';
+
+        const updatedOrder = await order.save();
+        return res.status(200).json({
+            success : true,
+            order : updatedOrder
+        })
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
 };
 

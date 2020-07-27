@@ -9,5 +9,5 @@ router.post('/orders',orderController.addOrder);
 router.get('/orders', orderController.getAllOrders);
 
 router.post('/order',orderController.postOrderStatus);
-
+router.patch('/order/:orderId',orderController.updateOrder);
 module.exports = router;

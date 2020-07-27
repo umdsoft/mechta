@@ -20,6 +20,7 @@ router.post('/category', categoryController.addCategory);
 router.get('/category', categoryController.getCategory);
 router.delete('/category/:id', categoryController.deleteCategory);
 
+router.patch('/category/:categoryId',categoryController.updateCategory);
 router.post('/color', upload.single('color'), categoryController.addColor);
 router.get('/color', categoryController.getColors);
 router.delete(`/color/:id`, categoryController.deleteColor);

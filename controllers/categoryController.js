@@ -44,7 +44,6 @@ exports.updateCategory = async(req, res) => {
         console.log(error);
         next(error);
     }
-
 }
 
 exports.deleteCategory = (req,res) => {
