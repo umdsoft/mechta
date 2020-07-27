@@ -12,18 +12,12 @@ const orderSchema = Schema({
     address: {type: String, required: true},
     totalPrice: {type: Number , required: true},
     totalNum: {type: Number, required: true},
-    creatorId : {type : Schema.Types.ObjectId, ref : 'consumer', required : true},
     products: [
-        {
+        { 
             productId: {
                 type: Schema.Types.ObjectId,
                 ref: 'products',
                 required: true
-            },
-            categoryId: {
-                type : Schema.Types.ObjectId,
-                ref : 'categories',
-                required : true
             },
             color: {
                 type: Schema.Types.ObjectId,

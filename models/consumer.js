@@ -12,6 +12,7 @@ const consumerSchema = Schema({
    nextOrderId : Number,
    isAdmin: {type: Boolean, default: false},
    date: {type: Date, required: true},
+   
    orders : [{orderId : {type : Schema.Types.ObjectId, ref: 'order'} , lastOrderId : Number}]
 });
 

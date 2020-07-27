@@ -31,24 +31,8 @@ exports.checkUser = async (req, res) => {
 }
 exports.addOrder =  async (req, res) => {
     const data = req.body;
-
-    const user = await Consumer.findOne({phone: data.phone});
-    if(!user) {
-        res.status(401).json({
-            message : "user not found"
-        })
-    }
-    if(data.address !== user.address) {
-        user.address = data.address;
-    }
-    if(data.name !== user.name) {
-        user.name = data.name;
-    }
-    if(data.region !== user.region){
-        user.region = data.region;
-    }
-
-
+    console.log(data);  
+   
     try {
         const newOrder = new Order({
             name: data.name,
@@ -57,20 +41,12 @@ exports.addOrder =  async (req, res) => {
             totalPrice: data.totalPrice,
             totalNum: data.num,
             products: data.products,
-            creatorId : user._id,
             status : data.status,
             region : data.region,
             date: Date.now()
         });
         const order = await newOrder.save();
-        user.orders.push({
-            orderId : order._id,
-            lastOrderId : user.nextOrderId
-        });
-        user.nextOrderId = ++user.nextOrderId;
-        await user.save();
         return res.status(200).json({
-            orderId : --user.nextOrderId,
             message: {
                 uz : "Buyurtma qabul qilindi",
                 ru : "Заказ принят"
