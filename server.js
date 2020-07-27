@@ -20,6 +20,12 @@ mongoose.connect(config.mongoUri,{
 
 mongoose.set('useFindAndModify', false);
 
+//user global
+app.get('*',(req,res,next)=>{
+    res.locals.user = req.user || null;
+    next();
+})
+
 app.use(bodyParser.json());
 app.use(cors({ rogin : "*" }));
 app.use('/api',api);
@@ -37,6 +43,8 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
+
+
 app.get('/', function(req, res){
     res.send("Hello Server");
 });

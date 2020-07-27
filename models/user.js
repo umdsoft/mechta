@@ -6,7 +6,7 @@ const userSchema = Schema({
    email: {type:String, required: true},
    password: {type:String, required: true},
    name: {type:String, required: true},
-   isAdmin: {type: Boolean, required: true},
+   role: {type: String, required: true},
    date: {type: Date, required: true}
 });
 

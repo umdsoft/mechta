@@ -1,5 +1,7 @@
 const router = require('express').Router()
-const productController = require('../controllers/productController')
+const productController = require('../controllers/productController');
+
+const {eA,eAdmin,eOperator,eBoth} = require('../middleware/checkUser');
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function (req,file,cb) {
@@ -9,6 +11,7 @@ const storage = multer.diskStorage({
         cb(null, `${Date.now()}-${file.originalname}`);
     }
 });
+
 
 const upload = multer({storage: storage});
 

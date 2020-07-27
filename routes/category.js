@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const categoryController = require('../controllers/categoryController');
 const multer = require('multer');
+const {eA,eAdmin,eOperator,eBoth} = require('../middleware/checkUser');
 const storage = multer.diskStorage({
     destination: function (req,file,cb) {
         // console.log(file);

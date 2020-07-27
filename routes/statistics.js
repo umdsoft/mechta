@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const statisticsController = require('../controllers/statisticsController');
-
+const {eA,eAdmin,eOperator,eBoth} = require('../middleware/checkUser');
 
 router.get('/getstats', statisticsController.getStatistics);
 // router.get('/order/:orderId',orderController.getByRegion);
