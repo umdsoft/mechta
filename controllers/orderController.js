@@ -31,7 +31,6 @@ exports.checkUser = async (req, res) => {
 }
 exports.addOrder =  async (req, res) => {
     const data = req.body;
-    console.log(data);  
    
     try {
         const newOrder = new Order({
