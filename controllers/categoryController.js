@@ -50,6 +50,7 @@ exports.addColor = (req,res) => {
     }
     const color = new Color({
         name: form.name,
+        url : colorUrl,
         date: Date.now()
     });
     color.save().then(result => {
