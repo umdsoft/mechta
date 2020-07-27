@@ -26,6 +26,27 @@ exports.getCategory = async (req,res)=>{
     res.send(category);
 }
 
+exports.updateCategory = async(req, res) => {
+    const { categoryId } = req.params;
+
+    try {
+        const category = await Category.findById(categoryId);
+        
+        category.nameUz = req.body.nameUz;
+        category.nameRu = req.body.nameRu;
+
+        const updatedCategory = await category.save();
+        return res.status(200).json({
+            success : true,
+            category : updatedCategory
+        })
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+
+}
+
 exports.deleteCategory = (req,res) => {
     Category.findByIdAndDelete(req.params.id , (err,doc)=>{
         if(!err){
