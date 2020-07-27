@@ -1,45 +1,46 @@
 const Product = require('../models/product');
 
+const Product = require('../models/product');
+
 exports.addProduct = async (req, res) => {
     const urls = [];
     const files = req.files;
 
-     for (const [idx, file] of files.entries()) {
-    const { path } = file
-    urls.push({
-      url: path.replace(/\\/g, '/'),
-      colorId: req.body.colors[idx],
-    })
-  }
-  console.log(urls)
-  const product = new Product({
-    nameUz: req.body.nameUz,
-    nameRu: req.body.nameRu,
-    pid: Date.now(),
-    category: req.body.category,
-    size: req.body.size,
-    netto: req.body.netto,
-    diametr: req.body.diametr,
-    diz: req.body.diz,
-    pok: req.body.pok,
-    descriptionUz: req.body.descriptionUz,
-    descriptionRu: req.body.descriptionRu,
-    xarakterUz: req.body.xarakterUz,
-    xarakterRu: req.body.xarakterRu,
-    video: req.body.video,
-    instruksiyaUz: req.body.instruksiyaUz,
-    instruksiyaRu: req.body.instruksiyaRu,
-    images: urls,
-    price: req.body.price,
-    date: Date.now(),
-  })
+    for (const [idx,file] of files.entries()) {
+        const { path } = file;
+        urls.push({
+            url : path.replace(/\\/g, '/'),
+            colorId : req.body.colors[idx]
+        });
+    };
+    const product = new Product({
+        nameUz: req.body.nameUz,
+        nameRu: req.body.nameRu,
+        pid: Date.now(),
+        category: req.body.category,
+        size: req.body.size,
+        netto: req.body.netto,
+        diametr: req.body.diametr,
+        diz: req.body.diz,
+        pok: req.body.pok,
+        descriptionUz: req.body.descriptionUz,
+        descriptionRu: req.body.descriptionRu,
+        xarakterUz: req.body.xarakterUz,
+        xarakterRu: req.body.xarakterRu,
+        video: req.body.video,
+        instruksiyaUz: req.body.instruksiyaUz,
+        instruksiyaRu: req.body.instruksiyaRu,
+        images: urls,
+        price: req.body.price,
+        date: Date.now()
+    });
 
-  product.save().then((result) => {
-    res.status(200).json({
-      message: 'Ушпешно добавления',
-      product,
-    })
-  })
+    product.save()
+        .then(result => {
+            res.status(200).json({
+                message: "Ушпешно добавления"
+            })
+        });
 }
 
 exports.getProduct = async (req, res)=> {
@@ -118,3 +119,4 @@ const clearImage = (filePath) => {
         console.log(err);
     });
 };
+
