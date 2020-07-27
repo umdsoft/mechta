@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const Category = require('./category');
-const Colors = require('./color');
 const slug = require('mongoose-slug-generator');
 const Schema = mongoose.Schema;
 mongoose.plugin(slug);
