@@ -12,16 +12,14 @@ exports.getStatistics = async (req, res) => {
     const dayOfWeek = startOfDay.getDay();
     const dayOfMonth = startOfDay.getDate();
     // console.log('startOfDay', startOfDay);
-    // console.log('dayOfWeek', dayOfWeek);
-    // console.log('dayof month', dayOfMonth);
+
 
 
     const startOfWeek = new Date(Math.floor(startOfDay.getTime() - dayOfWeek * interval));
     const startOfMonth = new Date(Math.floor(startOfDay.getTime() - dayOfMonth * interval));
     const last30Days = new Date(Math.floor(startOfDay.getTime() - 30 * interval));
-    // console.log(startOfWeek,'startOfWeek');
-    // console.log(startOfDay,'startOfDay');
-    // console.log(startOfMonth , 'startofMonth');
+
+
 
     const ordersToday = await Order.find({ date : {"$gte" : startOfDay}}).countDocuments();
     const ordersWeek = await Order.find({date : {"$gte" : startOfWeek}}).countDocuments();
@@ -41,8 +39,7 @@ exports.getStatistics = async (req, res) => {
         ordersToday ,
         ordersWeek,
         orderMonth,
-        ordersLast30Days,
-        ordersByCategory : stat
+        ordersLast30Days
     });
 }
 
@@ -56,6 +53,5 @@ exports.getByMonth = async (req, res) => {
     const orders = await Order.find({date : {"$lte" : ending , "$gte" : beginning}}).countDocuments();
     console.log(orders);
     res.status(200).json({orders})
-    // console.log('beginningOfMonth' ,beginning);
-    // console.log('ending',ending);
+
 }
