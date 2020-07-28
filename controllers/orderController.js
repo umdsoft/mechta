@@ -98,10 +98,10 @@ exports.postOrderStatus = async(req, res) => {
     }
 
 exports.updateOrder = async(req, res,next) => {
-    const { orderId } = req.params;
+    const { id } = req.params;
 
     try {
-        const order = await Order.findById(orderId);
+        const order = await Order.findById(id);
         
         order.status = 'active';
 
