@@ -97,7 +97,7 @@ exports.postOrderStatus = async(req, res) => {
         console.log(error);
     }
 
-exports.updateOrder = async(req, res) => {
+exports.updateOrder = async(req, res,next) => {
     const { orderId } = req.params;
 
     try {

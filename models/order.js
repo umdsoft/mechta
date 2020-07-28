@@ -1,8 +1,4 @@
 const mongoose = require('mongoose');
-const Color = require('./color');
-const Porduct = require('./product');
-const category = require('./category');
-const Consumer = require('./consumer');
 const Schema = mongoose.Schema;
 
 const orderSchema = Schema({
@@ -21,7 +17,7 @@ const orderSchema = Schema({
             },
             color: {
                 type: Schema.Types.ObjectId,
-                ref : "color",
+                ref : 'colors',
                 required: true
             },
             productNum: {
