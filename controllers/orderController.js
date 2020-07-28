@@ -3,7 +3,6 @@ const Consumer = require('../models/consumer');
 
 exports.addOrder =  async (req, res) => {
     const data = req.body;
-   
     try {
         const newOrder = new Order({
             name: data.name,
