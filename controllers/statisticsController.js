@@ -41,7 +41,7 @@ exports.getStatistics = async (req, res) => {
         ru : {}
     }
     for(let key in ordersByCategory) {
-        const ct = await Category.findOne({_id : key},'nameUz nameRu');
+        const ct = await Category.findOne({'_id' : key},'nameUz nameRu');
         // console.log(ct);
         nameU = ct.nameUz;
         nameR = ct.nameRu;
