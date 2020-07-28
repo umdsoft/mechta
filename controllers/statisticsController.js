@@ -23,37 +23,6 @@ exports.getStatistics = async (req, res) => {
     // console.log(startOfDay,'startOfDay');
     // console.log(startOfMonth , 'startofMonth');
 
-    const category = await Order.find({},'products -_id');
-    // console.log(ordersByCategory);
-    const ordersByCategory = {};
-    category.forEach(products => {
-        products.products.forEach(p => {
-            const catId = p.categoryId && p.categoryId.toString();
-            if(ordersByCategory[catId]){
-                ++ordersByCategory[catId];
-            }else if(!ordersByCategory[catId]){
-                ordersByCategory[catId] = 1;
-            }
-        })
-    });
-    const stat = {
-        uz : {},
-        ru : {}
-    }
-    for(let key in ordersByCategory) {
-        const ct = await Category.findOne({_id : key},'nameUz nameRu');
-        // console.log(ct);
-        nameU = ct.nameUz;
-        nameR = ct.nameRu;
-        // console.log(ordersByCategory[key]);
-        // console.log(nameU , nameR);
-        stat.uz[nameU] = ordersByCategory[key];
-        stat.ru[nameR] = ordersByCategory[key];
-    }
-
-    console.log(stat);
-
-
     const ordersToday = await Order.find({ date : {"$gte" : startOfDay}}).countDocuments();
     const ordersWeek = await Order.find({date : {"$gte" : startOfWeek}}).countDocuments();
     const orderMonth = await Order.find({date : {"$gte" : startOfMonth}}).countDocuments();
