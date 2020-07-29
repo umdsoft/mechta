@@ -1,5 +1,4 @@
 const Order = require('../models/order');
-const Consumer = require('../models/consumer');
 
 exports.addOrder =  async (req, res) => {
     const data = req.body;
@@ -9,7 +8,7 @@ exports.addOrder =  async (req, res) => {
             phone: data.phone,
             address: data.address,
             totalPrice: data.totalPrice,
-            totalNum: data.num,
+            totalNum: data.totalNum,
             products: data.products,
             status : data.status,
             region : data.region,
