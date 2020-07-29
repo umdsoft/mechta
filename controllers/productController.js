@@ -60,23 +60,28 @@ exports.updateProduct = async(req, res) => {
     const { productId } = req.params;
 
     try {
-        const product = await Product.findById(productId);
-
-        product.nameUz = req.body.nameUz;
-        product.nameRu = req.body.nameRu;
-        product.size = req.body.size;
-        product.diametr = req.body.diametr;
-        product.descriptionUz = req.body.descriptionUz;
-        product.descriptionRu = req.body.descriptionRu;
-        product.xarakterUz = req.body.xarakterUz;
-        product.xarakterRu = req.body.xarakterRu;
-        product.price = req.body.price;
-
-        const updatedProduct = await product.save();
-        return res.status(200).json({
-            success : true,
-            product : updatedProduct
-        })
+        const product = await Product.findByIdAndUpdate(productId,{
+            nameUz : req.body.nameUz,
+            nameRu : req.body.nameRu,
+            size : req.body.size,
+            diametr : req.body.diametr,
+            descriptionUz : req.body.descriptionUz,
+            descriptionRu : req.body.descriptionRu,
+            xarakterUz : req.body.xarakterUz,
+            xarakterRu : req.body.xarakterRu,
+            price : req.body.price
+        },(err,product)=>{
+            if(err){
+                console.log(err);
+                next(err);
+            }
+            else{
+                res.status(200).json({
+                    success : true,
+                    product : product
+                })
+            }
+        });
     } catch (error) {
         console.log(error);
         next(error);
