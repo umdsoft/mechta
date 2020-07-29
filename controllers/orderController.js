@@ -14,13 +14,10 @@ exports.addOrder =  async (req, res) => {
             region : data.region,
             date: Date.now()
         });
-        const order = await newOrder.save();
-        return res.status(200).json({
-            message: {
-                uz : "Buyurtma qabul qilindi",
-                ru : "Заказ принят"
-            }
-        });
+        newOrder.save()
+            .then(
+                ()=> res.status(200).json(newOrder))
+            .catch((err) => res.send(err))
 
     } catch (error) {
         console.log(error);
