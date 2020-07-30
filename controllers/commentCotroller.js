@@ -13,6 +13,12 @@ exports.addComment = (req,res) => {
 }
 exports.getAllComments = async (req,res) => {
     const comments = await Comment
+        .populate('product')
+        .sort({date: -1})
+    res.send(comments)
+}
+exports.getAllNoActiveComments = async (req,res) => {
+    const comments = await Comment
         .find({status: false})
         .populate('product')
         .sort({date: -1})
