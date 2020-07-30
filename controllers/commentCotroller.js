@@ -40,5 +40,11 @@ exports.updateCommentById = async (req,res) => {
     })
 }
 exports.deleteCommentById = async (req,res) => {
-
+    Comment.findByIdAndDelete(req.params.id, (err, doc) => {
+        if (!err) {
+            res.json({message: "Этот был удален"});
+        } else {
+            console.log("Error" + err);
+        }
+    });
 }
