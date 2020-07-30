@@ -18,11 +18,15 @@ exports.getAllComments = async (req,res) => {
     res.send(comments)
 }
 exports.getAllNoActiveComments = async (req,res) => {
+ try{
     const comments = await Comment
         .find({status: false})
         .populate('product')
         .sort({date: -1})
     res.send(comments)
+ } catch (e){
+     res.send(e)
+ }
 }
 exports.getCommentByProduct = async (req,res) => {
     try{
