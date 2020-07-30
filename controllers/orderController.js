@@ -26,13 +26,22 @@ exports.addOrder =  async (req, res) => {
     }
 };
 
+exports.getByNewOrder = async (req, res)=> {
+    try{
+        const orders = await Order.find(status === "noactive")
+            .sort({date: -1})
+        res.status(200).json(orders)
+    }catch (e){
+        res.status(500).json(e)
+    }
+}
 
 exports.getAllOrders = async (req,res) => {
    try{
     const orders = await Order
         .find()
         // .populate(['products.productId','products.categoryId'])
-        .sort({date: -1, status: -1})
+        .sort({date: -1})
     res.status(200).json(orders)
    } catch (e) {
        res.status(500).json(e)
