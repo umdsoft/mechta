@@ -32,7 +32,7 @@ exports.getAllOrders = async (req,res) => {
     const orders = await Order
         .find()
         // .populate(['products.productId','products.categoryId'])
-        .sort({date: -1, status: "noactive"})
+        .sort({date: -1, status: -1})
     res.status(200).json(orders)
    } catch (e) {
        res.status(500).json(e)
