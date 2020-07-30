@@ -9,4 +9,5 @@ router.get('/comments',commentController.getAllNoActiveComments)
 router.get('/allcomments',commentController.getAllComments)
 router.get('/comment',commentController.getCommentByProduct)
 router.patch('/comment',commentController.updateCommentById)
+router.delete('/comment/:id',commentController.deleteCommentById)
 module.exports = router
