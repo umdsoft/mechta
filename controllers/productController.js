@@ -58,7 +58,7 @@ exports.deleteProduct = (req,res) => {
 exports.updateProduct = async(req, res) => {
 
         const product = await Product.findByIdAndUpdate(req.params.id)
-            price : req.body.price
+            product.price = req.body.price
                 product.save({validateBeforeSave:false})
                     .then(()=>{
                         res.status(200).json({
