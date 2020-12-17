@@ -27,14 +27,13 @@ exports.addProduct = async (req, res) => {
         date: Date.now()
     });
 
-    product.save()
+    product.save(/*{validateBeforeSave:false}*/)
         .then(result => {
             res.status(200).json({
                 message: "Ушпешно добавления"
             })
         });
 }
-
 exports.getProduct = async (req, res)=> {
     const product = await Product.find().populate('images.colorId').sort({date: -1});
     res.status(200).json(product);
@@ -57,36 +56,22 @@ exports.deleteProduct = (req,res) => {
 }
 
 exports.updateProduct = async(req, res) => {
-    const { productId } = req.params;
-
-    try {
-        const product = await Product.findByIdAndUpdate(productId,{
-            nameUz : req.body.nameUz,
-            nameRu : req.body.nameRu,
-            size : req.body.size,
-            diametr : req.body.diametr,
-            descriptionUz : req.body.descriptionUz,
-            descriptionRu : req.body.descriptionRu,
-            xarakterUz : req.body.xarakterUz,
-            xarakterRu : req.body.xarakterRu,
+    const { productId } = req.params.id;
+        const product = await Product.findByIdAndUpdate(productId)
             price : req.body.price
-        },(err,product)=>{
-            if(err){
-                console.log(err);
-                next(err);
-            }
-            else{
-                res.status(200).json({
-                    success : true,
-                    product : product
-                })
-            }
-        });
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-
+                product.save({validateBeforeSave:false})
+                    .then(()=>{
+                        res.status(200).json({
+                            success : true,
+                            product : product
+                        })
+                    })
+                    .catch((err)=>{
+                        res.status(500).json({
+                            success : false,
+                            err
+                        })
+                    })
 }
 
 const clearImage = (filePath) => {
