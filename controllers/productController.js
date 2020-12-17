@@ -56,8 +56,8 @@ exports.deleteProduct = (req,res) => {
 }
 
 exports.updateProduct = async(req, res) => {
-    const { productId } = req.params.id;
-        const product = await Product.findByIdAndUpdate(productId)
+
+        const product = await Product.findByIdAndUpdate(req.params.id)
             price : req.body.price
                 product.save({validateBeforeSave:false})
                     .then(()=>{
